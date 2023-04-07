@@ -3,9 +3,9 @@
 int linear_search(int [], int, int);
 int binary_search(int [], int, int);
 void traverse(int [], int);
-void unsort_insert(int [], int, int, int);
+void unsort_insert(int [], int, int, int, int);
 void main(){
-   int arr[100], n, item, i, res, choice;
+   int arr[100], n, item, i, res, choice, key, pos;
    clrscr();
    printf("Enter the no. of elements:");
    scanf("%d", &n);
@@ -13,7 +13,7 @@ void main(){
    for(i=0; i<n; i++){
      scanf("%d", &arr[i]);
    }
-   printf("Enter the function you want to perform: \n1. Linear Search\n2. Binary Search\n3. Traverse ");
+   printf("Enter the function you want to perform: \n1. Linear Search\n2. Binary Search\n3. Traverse4. Unsorted Insertion ");
    scanf("%d", &choice);
    switch(choice){
    case 1:
@@ -33,6 +33,16 @@ void main(){
        printf("Element not in the array");
      else
        printf("Element found at: %d position", res + 1);
+
+   case 3:
+     traverse(arr, n);
+
+   case 4:
+     printf("Enter the element and postion you want to insert: ");
+     scanf("%d%d", &key, &pos);
+     unsort_insert(arr, n, pos, key);
+     n++;
+     traverse(arr,n);
   }
   getch();
 }
@@ -62,8 +72,13 @@ int binary_search(int a[], int n, int item){
 }
 void traverse(int a[], int n){
   int i;
+  printf("The array is:\n");
   for(i = 0; i < n; i++){
-     printf("%d", a[i];
+     printf("%d ", a[i];
   }
 }
-void unsort_insert(int a[], int n, int loc, int item){
+void unsort_insert(int a[], int n, int pos, int item){
+    for(i = n - 1; i >= pos; i--){
+       arr[i + 1] = arr[i];
+    arr[pos] = item;
+}
