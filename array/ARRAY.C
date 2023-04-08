@@ -13,57 +13,72 @@ void main(){
    for(i=0; i<n; i++){
      scanf("%d", &arr[i]);
    }
-   printf("Enter the function you want to perform: \n1. Linear Search\n2. Binary Search\n3. Traverse\n4. Unsorted Insertion ");
+   printf("Enter the function you want to perform: \n1. Linear Search\n2. Binary Search\n3. Traverse\n4. Unsorted Insertion\n5. Sorted Insertion\n6. Deletion\n7. Sort ");
    scanf("%d", &choice);
    switch(choice){
     case 1:
-     printf("Enter the element you want to search for: ");
-     scanf("%d", &item);
-     res = linearSearch(arr, n, item);
-     if(res == -1)
-       printf("Element not in the array");
-     else
-       printf("Element found at: %d position", res + 1);
+         printf("Enter the element you want to search for: ");
+         scanf("%d", &item);
+         res = linearSearch(arr, n, item);
+         if(res == -1)
+           printf("Element not in the array");
+         else
+           printf("Element found at: %d position", res + 1);
+         break;
 
     case 2:
-     printf("Enter the element you want to search for: ");
-     scanf("%d", &item);
-     res = binarySearch(arr, n, item);
-     if(res == -1)
-       printf("Element not in the array");
-     else
-       printf("Element found at: %d position", res + 1);
+         printf("Enter the element you want to search for: ");
+         scanf("%d", &item);
+         res = binarySearch(arr, n, item);
+         if(res == -1)
+           printf("Element not in the array");
+         else
+           printf("Element found at: %d position", res + 1);
+         break;
 
     case 3:
-     traverse(arr, n);
+         traverse(arr, n);
+         break;
 
     case 4:
-     printf("Enter the element and postion you want to insert: ");
-     scanf("%d%d", &key, &pos);
-     unsortedInsert(arr, n, pos, key);
-     n++;
-     traverse(arr,n);
+         printf("Enter the element and postion you want to insert: ");
+         scanf("%d%d", &key, &pos);
+         unsortedInsert(arr, n, pos, key);
+         n++;
+         traverse(arr,n);
+         break;
     
     case 5:
-     printf("Enter the element you want to insert: ");
-     scanf("%d", &key);
-     sortedInsert(arr, n, key);
-     printf("New Array is: ");
-     traverse(arr,n);
+         printf("Enter the element you want to insert: ");
+         scanf("%d", &key);
+         bubbleSort(arr,n);
+         traverse(arr, n);
+         sortedInsert(arr, n, key);
+         n++;
+         traverse(arr,n);
+         break;
     
     case 6:
-    printf("Enter the element you want to delete: ");
-    scanf("%d", &key);
-    pos = binarySearch(arr, n, key);
-    if (pos == -1){
-        printf("Element not found");
-    }
-    else{
-        deletion(arr, n, pos, item);
-        n--;
-    }
-    traverse(arr, n);
+        printf("Enter the element you want to delete: ");
+        scanf("%d", &key);
+        pos = binarySearch(arr, n, key);
+        if (pos == -1){
+            printf("Element not found");
+        }
+        else{
+            deletion(arr, n, pos, item);
+            n--;
+        }
+        traverse(arr, n);
+        break;
     
+    case 7:
+        bubbleSort(arr, n);
+        traverse(arr,n);
+        break;
+    default:
+        printf("Wrong Choice Entered");
+        break;
   }
 }
 int linearSearch(int a[], int n, int item){
@@ -120,5 +135,15 @@ void deletion(int a[], int n, int pos, int item){
     }
 }
 void bubbleSort(int a[], int n){
+    int temp = 0;
+    for(int i = 0; i < n - 1; i++){
+        for(int j = i + 1; j < n; j++){
+            if (a[i] > a[j]){
+                temp = a[i];
+                a[i] = a[j];
+                a[j] = temp;
+            }
+        }
+    }
     
 }
