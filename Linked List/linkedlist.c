@@ -10,11 +10,12 @@ void insertAtBeg(node **, int);
 void traverse(node *);
 void insertAtEnd(node **, int);
 void deleteFromBeg(node **);
+void deleteFromEnd(node *);
 
 int main() {
     int choice, item, i = 0;
     while(1){
-    printf("Enter your choice: \n1. Insert at Beginning\n2. Insert at Ending\n3. Traverse\n4. Deletion from Beginning\n5. Exit ");
+    printf("Enter your choice: \n1. Insert at Beginning\n2. Insert at Ending\n3. Traverse\n4. Deletion from Beginning\n5. Delete From Ending\n6. Exit ");
     scanf("%d", &choice);
     switch(choice){
         case 1:
@@ -37,6 +38,9 @@ int main() {
         case 4:
             deleteFromBeg(&head);
             break;
+        
+        case 5:
+            deleteFromEnd(head);
             
         default:
             exit(0);
@@ -83,4 +87,14 @@ void deleteFromBeg(node **head){
     *head = temp -> next;
     temp -> next = NULL;
     free(temp);
+}
+
+void deleteFromEnd(node *head){
+    node *tmp;
+    while(head -> next != NULL){
+        tmp = head;
+        head = head ->next;
+    }
+    tmp -> next = NULL;
+    free(head);
 }
