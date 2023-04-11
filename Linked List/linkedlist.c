@@ -41,6 +41,7 @@ int main() {
         
         case 5:
             deleteFromEnd(head);
+            break;
             
         default:
             exit(0);
