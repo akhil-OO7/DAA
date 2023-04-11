@@ -5,10 +5,12 @@ typedef struct nodeType{
     struct nodeType *next;
 }node;
 node *head = NULL;
+
 void insertAtBeg(node **, int);
 void traverse(node *);
 void insertAtEnd(node **, int);
 void deleteFromBeg(node **);
+
 int main() {
     int choice, item, i = 0;
     while(1){
@@ -42,6 +44,7 @@ int main() {
     };
     return 0;
 }
+
 void insertAtBeg(node **head, int item){
     node *ptr;
     ptr = (node *)malloc(sizeof(node));
@@ -52,6 +55,7 @@ void insertAtBeg(node **head, int item){
         ptr -> next = *head;
     *head = ptr;
 }
+
 void insertAtEnd(node **head, int item){
     node *ptr;
     ptr = (node *)malloc(sizeof(node));
@@ -66,12 +70,14 @@ void insertAtEnd(node **head, int item){
     }
     tmp -> next = ptr;
 }
+
 void traverse(node * head){
     while(head != NULL){
         printf("%d->", head -> info);
         head = head -> next;
     }
 }
+
 void deleteFromBeg(node **head){
     node *temp = *head;
     *head = temp -> next;
