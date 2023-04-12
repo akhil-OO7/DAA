@@ -12,6 +12,7 @@ node *tail = NULL;
 void insertAtBeg(node **, node **, int);
 void insertAtEnd(node **, node **, int);
 void inorderTraverse(node *);
+void deleteFromBeg(node **);
 
 int main() {
     int choice, item;
@@ -54,16 +55,7 @@ void insertAtBeg(node **head, node **tail, int item){
         *head = ptr;
     }
 }
-void inorderTraverse(node *head){
-    if (head == NULL){
-        printf("Empty");
-        return;
-    }
-    while(head != NULL){
-        printf("%d -> ", head -> info);
-        head = head ->next;
-    }
-}
+
 void insertAtEnd(node **head, node **tail, int item){
     node *ptr = (node *)malloc(sizeof(node));
     ptr -> info = item;
@@ -76,4 +68,23 @@ void insertAtEnd(node **head, node **tail, int item){
     ptr -> prev = *tail;
     ptr -> next = NULL;
     *tail = ptr;
+}
+
+void inorderTraverse(node *head){
+    if (head == NULL){
+        printf("Empty");
+        return;
+    }
+    while(head != NULL){
+        printf("%d -> ", head -> info);
+        head = head ->next;
+    }
+}
+
+void deleteFromBeg(node **head){
+    if(*head == NULL){
+        printf("Underflow");
+        return;
+    }
+    
 }
