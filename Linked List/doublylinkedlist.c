@@ -9,39 +9,71 @@ typedef struct nodeType{
 node *head = NULL;
 node *tail = NULL;
 
-void insertAtBeginning(node **, node**, int);
-void inorderTraversal(node *head);
+void insertAtBeg(node **, node **, int);
+void insertAtEnd(node **, node **, int);
+void inorderTraverse(node *);
+
 int main() {
     int choice, item;
     while(1){
-        printf("Enter the operation you want to perform:\n1. Insert at Beginning\n2. Inorder Traversal");
+        printf("Enter the operation you want to perform:\n1. Insert at Beginning\n2. Insert at Ending\n3. Inorder Traversal ");
+        scanf("%d", &choice);
         switch(choice){
-            case 1: 
-                printf("Enter the data you want to enter: ");
+            case 1:
+                printf("Enter the data: ");
                 scanf("%d", &item);
-                insertAtBeginning(&head, &tail, item);
+                insertAtBeg(&head, &tail, item);
                 break;
-                
+            
             case 2:
-                inorderTraversal(head);
+                printf("Enter the data: ");
+                scanf("%d", &item);
+                insertAtEnd(&head, &tail, item);
                 break;
                 
-            default:
-                exit(0);
+            case 3:
+                inorderTraverse(head);
+                printf("NULL/n");
                 break;
         }
     }
     return 0;
 }
 
-void insertAtBeginning(node **head, node **tail, int item){
+void insertAtBeg(node **head, node **tail, int item){
+    node *ptr;
+    ptr = (node *)malloc(sizeof(node));
+    ptr -> info = item;
+    if(*head == NULL){
+        ptr -> next = ptr -> prev = NULL;
+        *head = *tail = ptr;
+    } else{
+        ptr -> next = *head;
+        (*head) -> prev = ptr;
+        ptr -> prev = NULL;
+        *head = ptr;
+    }
+}
+void inorderTraverse(node *head){
+    if (head == NULL){
+        printf("Empty");
+        return;
+    }
+    while(head != NULL){
+        printf("%d -> ", head -> info);
+        head = head ->next;
+    }
+}
+void insertAtEnd(node **head, node **tail, int item){
     node *ptr = (node *)malloc(sizeof(node));
     ptr -> info = item;
     if(*head == NULL){
+        ptr -> next = ptr -> prev = NULL;
         *head = *tail = ptr;
         return;
     }
-    ptr -> next = *head;
-    *head -> prev = ptr;
-    *head = ptr;
+    (*tail) -> next = ptr;
+    ptr -> prev = *tail;
+    ptr -> next = NULL;
+    *tail = ptr;
 }
