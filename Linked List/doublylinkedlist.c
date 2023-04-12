@@ -13,15 +13,16 @@ void insertAtBeg(node **, node **, int);
 void insertAtEnd(node **, node **, int);
 void inorderTraverse(node *);
 void deleteFromBeg(node **);
+void deleteFromEnd(node **);
 
 int main() {
     int choice, item;
     while(1){
-        printf("Enter the operation you want to perform:\n1. Insert at Beginning\n2. Insert at Ending\n3. Inorder Traversal ");
+        printf("Enter the operation you want to perform:\n1. Insert at Beginning\n2. Insert at Ending\n3. Inorder Traversal\n4. Delete from Beginning\n5. Delete from Ending ");
         scanf("%d", &choice);
         switch(choice){
             case 1:
-                printf("Enter the data: ");
+                printf("\nEnter the data: ");
                 scanf("%d", &item);
                 insertAtBeg(&head, &tail, item);
                 break;
@@ -34,8 +35,19 @@ int main() {
                 
             case 3:
                 inorderTraverse(head);
-                printf("NULL/n");
+                printf("NULL\n");
                 break;
+            
+            case 4:
+                deleteFromBeg(&head);
+                break;
+                
+            case 5:
+                deleteFromEnd(&tail);
+                break;
+            
+            default:
+                exit(0);
         }
     }
     return 0;
@@ -83,8 +95,29 @@ void inorderTraverse(node *head){
 
 void deleteFromBeg(node **head){
     if(*head == NULL){
-        printf("Underflow");
+        printf("Underflow\n");
         return;
     }
-    
+    if((*head) -> next == NULL){
+        free(head);
+        free(tail);
+        return;
+    }
+    node *tmp;
+    tmp = *head;
+    *head = (*head) -> next;
+    (*head) -> prev = NULL;
+    free(tmp);
+}
+
+void deleteFromEnd(node **tail){
+    if(*tail == NULL){
+        printf("Underflow\n");
+        return;
+    }
+    node *tmp;
+    tmp = *tail;
+    *tail = (*tail) -> prev;
+    (*tail) -> next = NULL;
+    free(tmp);
 }
