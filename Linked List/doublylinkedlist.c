@@ -12,13 +12,15 @@ node *tail = NULL;
 void insertAtBeg(node **, node **, int);
 void insertAtEnd(node **, node **, int);
 void inorderTraverse(node *);
+void postorderTraverse(node *);
 void deleteFromBeg(node **);
 void deleteFromEnd(node **);
+
 
 int main() {
     int choice, item;
     while(1){
-        printf("Enter the operation you want to perform:\n1. Insert at Beginning\n2. Insert at Ending\n3. Inorder Traversal\n4. Delete from Beginning\n5. Delete from Ending ");
+        printf("Enter the operation you want to perform:\n1. Insert at Beginning\n2. Insert at Ending\n3. Inorder Traversal\n4. Post Order Traversal\n5. Delete from Beginning\n6. Delete from Ending ");
         scanf("%d", &choice);
         switch(choice){
             case 1:
@@ -39,10 +41,15 @@ int main() {
                 break;
             
             case 4:
+                postorderTraverse(tail);
+                printf("NULL\n");
+                break;
+            
+            case 5:
                 deleteFromBeg(&head);
                 break;
                 
-            case 5:
+            case 6:
                 deleteFromEnd(&tail);
                 break;
             
@@ -84,12 +91,21 @@ void insertAtEnd(node **head, node **tail, int item){
 
 void inorderTraverse(node *head){
     if (head == NULL){
-        printf("Empty");
         return;
     }
     while(head != NULL){
         printf("%d -> ", head -> info);
         head = head ->next;
+    }
+}
+
+void postorderTraverse(node *tail){
+    if (tail == NULL){
+        return;
+    }
+    while(tail != NULL){
+        printf("%d -> ", tail -> info);
+        tail = tail -> prev;
     }
 }
 
@@ -99,8 +115,8 @@ void deleteFromBeg(node **head){
         return;
     }
     if((*head) -> next == NULL){
-        free(head);
-        free(tail);
+        free(*head);
+        (*head) = NULL;
         return;
     }
     node *tmp;
@@ -113,6 +129,11 @@ void deleteFromBeg(node **head){
 void deleteFromEnd(node **tail){
     if(*tail == NULL){
         printf("Underflow\n");
+        return;
+    }
+    if((*tail) -> prev == NULL){
+        free(*tail);
+        (*tail) = NULL;
         return;
     }
     node *tmp;
