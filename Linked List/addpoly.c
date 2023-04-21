@@ -12,11 +12,12 @@ node *poly3 = NULL;
 
 void createPoly(node **, int, int);
 void addPoly(node *, node *, node **);
+void traverse(node *);
 
 void main() {
     int choice, c, p;
     while(1) {
-        printf("Enter your choice:\n1. Create 1st Polynomial\n2. Create 2nd Polynomial\n3. Traverse\n4. Add\t");
+        printf("\nEnter your choice:\n1. Create 1st Polynomial\n2. Create 2nd Polynomial\n3. Traverse\n4. Add\t");
         scanf("%d", &choice);
         switch(choice) {
             case 1:
@@ -50,9 +51,11 @@ void main() {
                         
                     default:
                         printf("Wrong Choice Entered");
-            
+                        break;
                 }
+            case 4:
                 addPoly(poly1, poly2, &poly3);
+                break;
                 
             default:
                 exit(0);
@@ -104,7 +107,12 @@ void traverse(node *tmp) {
         return;
     }
     while(tmp){
-        printf("%dx^%d + ", tmp -> coeff, tmp -> power);
+        if(tmp -> next != NULL)
+            printf("%dx^%d + ", tmp -> coeff, tmp -> power);
+        else if(tmp -> power == 0)
+            printf("%d", tmp -> coeff);
+        else
+            printf("%dx^%d", tmp -> coeff, tmp -> power);
         tmp = tmp -> next;
     }
 }
