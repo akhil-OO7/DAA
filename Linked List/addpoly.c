@@ -133,8 +133,7 @@ void multiplyPoly(node *poly1, node *poly2, node **poly3) {
         while(ptr2) {
             c = ptr1 -> coeff * ptr2 -> coeff;
             p = ptr1 -> power + ptr2 -> power;
-            loc = linearSearch(poly3, p);
-            printf("%d%d", loc -> coeff, loc -> power);
+            loc = linearSearch(*poly3, p);
             if(loc == NULL)
                 createPoly(poly3, c, p);
             else
