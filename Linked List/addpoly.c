@@ -13,11 +13,13 @@ node *poly3 = NULL;
 void createPoly(node **, int, int);
 void addPoly(node *, node *, node **);
 void traverse(node *);
+void multiplyPoly(node *, node *, node **);
+node *linearSearch(node *, int);
 
 void main() {
     int choice, c, p;
     while(1) {
-        printf("\nEnter your choice:\n1. Create 1st Polynomial\n2. Create 2nd Polynomial\n3. Traverse\n4. Add\t");
+        printf("\nEnter your choice:\n1. Create 1st Polynomial\n2. Create 2nd Polynomial\n3. Traverse\n4. Add\n5. Multiply\t");
         scanf("%d", &choice);
         switch(choice) {
             case 1:
@@ -34,7 +36,7 @@ void main() {
                 
             case 3:
                 int ch;
-                printf("Enter the Polynomial you want to display (1, 2, 3) :");
+                printf("Enter the Polynomial you want to display (1, 2, 3): ");
                 scanf("%d", &ch);
                 switch(ch){
                     case 1:
@@ -55,6 +57,10 @@ void main() {
                 }
             case 4:
                 addPoly(poly1, poly2, &poly3);
+                break;
+            
+            case 5:
+                multiplyPoly(poly1, poly2, &poly2);
                 break;
                 
             default:
@@ -115,4 +121,35 @@ void traverse(node *tmp) {
             printf("%dx^%d", tmp -> coeff, tmp -> power);
         tmp = tmp -> next;
     }
+}
+
+void multiplyPoly(node *poly1, node *poly2, node **poly3) {
+    int c, p;
+    node *ptr1, *ptr2, *loc;
+    ptr1 = poly1;
+    ptr2 = poly2;
+    while(ptr1) {
+        ptr2 = poly2;
+        while(ptr2) {
+            c = ptr1 -> coeff * ptr2 -> coeff;
+            p = ptr1 -> power + ptr2 -> power;
+            loc = linearSearch(poly3, p);
+            printf("%d%d", loc -> coeff, loc -> power);
+            if(loc == NULL)
+                createPoly(poly3, c, p);
+            else
+                loc -> coeff = loc -> coeff + c;
+            ptr2 = ptr2 -> next;
+        }
+        ptr1 = ptr1 -> next;
+    }
+}
+
+node *linearSearch(node *poly3, int p){
+    while(poly3){
+        if(poly3 -> power == p)
+            return poly3;
+        poly3 = poly3 -> next;
+    }
+    return NULL;
 }
