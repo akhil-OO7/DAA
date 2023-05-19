@@ -8,16 +8,17 @@ typedef struct nodeType {
 }bst;
 
 bst *root = NULL;
-
+bst create(int);
 void insert(bst **, int);
 void preorder(bst *);
 void inorder(bst *);
 void postorder(bst *);
+void insertRec(bst **, int);
 
 int main() {
     int choice, item;
     while(1) {
-        printf("Enter the operation you want to perform: \n1. Insertion\n2. Preorder Traversal\n3. Inorder Traversal\n4. Post order Traversal\t");
+        printf("Enter the operation you want to perform: \n1. Insertion\n2. Insertion Recursively\n3. Preorder Traversal\n4. Inorder Traversal\n5. Post order Traversal\t");
         scanf("%d", &choice);
         switch(choice) {
             case 1:
@@ -27,15 +28,24 @@ int main() {
                 break;
             
             case 2:
-                preorder(root);
+                printf("Enter the value you want to insert: ");
+                scanf("%d", &item);
+                insertRec(&root, item);
                 break;
-                
+            
             case 3:
-                inorder(root);
+                preorder(root);
+                printf("\n");
                 break;
                 
             case 4:
+                inorder(root);
+                printf("\n");
+                break;
+                
+            case 5:
                 postorder(root);
+                printf("\n");
                 break;
                 
             default:
@@ -44,6 +54,14 @@ int main() {
     }
 
     return 0;
+}
+
+bst create(int item) {
+    bst *ptr = (bst *)malloc(sizeof(bst));
+    ptr -> info = item;
+    ptr -> left = ptr -> right = NULL;
+    return ptr;
+    
 }
 
 void insert(bst **root, int item) {
@@ -68,11 +86,18 @@ void insert(bst **root, int item) {
             parent -> left = ptr;
     }
 }
-    
-    // else if (item > (*root) -> info)
-    //     insert(root -> right, item);
-    // else
-    //     insert(root -> left, item);
+
+void insertRec(bst **root, int item) {
+    bst *ptr = (bst *)malloc(sizeof(bst));
+    ptr -> info = item;
+    ptr -> left = ptr -> right = NULL;
+    if (*root == NULL)
+        *root = ptr;
+    else if(ptr -> info < (*root) -> info)
+        insertRec((*root) -> left, item);
+    else
+        insertRec((*root) -> right, item);
+}
 
 void preorder(bst *root) {
     if (root != NULL){
@@ -80,6 +105,8 @@ void preorder(bst *root) {
         preorder(root -> left);
         preorder(root -> right);
     }
+    else
+        printf("Empty");
 }
 
 void inorder(bst *root) {
@@ -88,12 +115,16 @@ void inorder(bst *root) {
         printf("%d ", root -> info);
         inorder(root -> right);
     }
+    else
+        printf("Empty");
 }
 
 void postorder(bst *root) {
     if (root != NULL) {
         postorder(root -> left);
         postorder(root -> right);
-        printf("%d", root -> info);
+        printf("%d ", root -> info);
     }
+    else
+        printf("Empty");
 }
