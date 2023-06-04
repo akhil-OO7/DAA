@@ -51,48 +51,51 @@ void reheapifyDownward(int a[], int start, int finish) {
         reheapifyDownward(a, max, finish);
     }
 }
-#include<stdio.h>
-void heapSort(int [], int);
-void maxHeap(int [], int);
-void maxHeapify(int [], int, int);
-void main() {
-    int a[10], i;
-    for(i = 1; i < 10; i++){
-        scanf("%d", &a[i]);
-    }
-    heapSort(a, 9);
-    for (i = 1; i < 10; i++) {
-        printf("%d ", a[i]);
-    }
-}
+// #include<stdio.h>
+// void heapSort(int [], int);
+// void maxHeap(int [], int);
+// void heapify(int [], int, int);
 
-void heapSort(int a[], int size) {
-    int i, t;
-    maxHeap(a, 9);
-    for(i = size; i >= 2; i--) {
-        t = a[1];
-        a[1] = a[i];
-        a[i] = t;
-        maxHeapify(a, 1, i - 1);
-    }
-}
+// void main() {
+//     int arr[100], n;
+//     printf("Enter the number of elements: ");
+//     scanf("%d", &n);
+//     printf("Enter %d elements of array: ", n);
+//     for(int i = 1; i <= n; i++) {
+//         scanf("%d", &arr[i]);
+//     }
+//     heapSort(arr, n);
+//     printf("Sorted Array is: ");
+//     for(int i = 1; i <= n; i++) {
+//         printf("%d ", arr[i]);
+//     }
+// }
 
-void maxHeap(int a[], int end) {
-    int i;
-    for(i = end / 2; i >= 1; i--)
-    maxHeapify(a, i, end);
-}
+// void heapSort(int a[], int size) {
+//     maxHeap(a, size);
+//     for(int i = size; i >= 2; i--) {
+//         int temp = a[1];
+//         a[1] = a[i];
+//         a[i] = temp;
+//         heapify(a, 1, i - 1);
+//     }
+// }
 
-void maxHeapify(int a[], int f, int size) {
-    int max = f, l = f * 2, r = f * 2 + 1, t;
-    if (l <= size && a[l] > a[max])
-        max = l;
-    if (r <= size && a[r] > a[max])
-        max = r;
-    if (f != max) {
-        t = a[f];
-        a[f] = a[max];
-        a[max] = t;
-        maxHeapify(a, max, size);
-    }
-}
+// void maxHeap(int a[], int size) {
+//     for (int i = size / 2; i >= 1; i--)
+//         heapify(a, i, size);
+// }
+
+// void heapify(int a[], int f, int size) {
+//     int max = f, l = f * 2, r = f * 2 + 1, t;
+//     if (l <= size && a[l] > a[max])
+//         max = l;
+//     if (r <= size && a[r] > a[max])
+//         max = r;
+//     if (f != max) {
+//         t = a[f];
+//         a[f] = a[max];
+//         a[max] = t;
+//         heapify(a, max, size);
+//     }
+// }
