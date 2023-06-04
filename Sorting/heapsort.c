@@ -51,48 +51,48 @@ void reheapifyDownward(int a[], int start, int finish) {
         reheapifyDownward(a, max, finish);
     }
 }
-// #include<stdio.h>
-// void heapSort(int [], int);
-// void maxHeap(int [], int, int);
-// void maxHeapify(int [], int, int);
-// void main() {
-//     int a[10], i;
-//     for(i = 1; i < 10; i++){
-//         scanf("%d", &a[i]);
-//     }
-//     maxHeap(a, 1, 9);
-//     heapSort(a, 9);
-//     for (i = 1; i < 10; i++) {
-//         printf("%d ", a[i]);
-//     }
-// }
+#include<stdio.h>
+void heapSort(int [], int);
+void maxHeap(int [], int);
+void maxHeapify(int [], int, int);
+void main() {
+    int a[10], i;
+    for(i = 1; i < 10; i++){
+        scanf("%d", &a[i]);
+    }
+    heapSort(a, 9);
+    for (i = 1; i < 10; i++) {
+        printf("%d ", a[i]);
+    }
+}
 
-// void heapSort(int a[], int size) {
-//     int i, t;
-//     for(i = size; i >= 2; i--) {
-//         t = a[1];
-//         a[1] = a[i];
-//         a[i] = t;
-//         maxHeapify(a, 1, i - i);
-//     }
-// }
+void heapSort(int a[], int size) {
+    int i, t;
+    maxHeap(a, 9);
+    for(i = size; i >= 2; i--) {
+        t = a[1];
+        a[1] = a[i];
+        a[i] = t;
+        maxHeapify(a, 1, i - 1);
+    }
+}
 
-// void maxHeap(int a[], int beg, int end) {
-//     int i;
-//     for(i = end / 2; i >= beg; i--)
-//     maxHeapify(a, i, end);
-// }
+void maxHeap(int a[], int end) {
+    int i;
+    for(i = end / 2; i >= 1; i--)
+    maxHeapify(a, i, end);
+}
 
-// void maxHeapify(int a[], int f, int size) {
-//     int max = f, l = f * 2, r = f * 2 + 1, t;
-//     if (l <= size && a[l] > a[max])
-//         max = l;
-//     if (r <= size && a[r] > a[max])
-//         max = r;
-//     if (f != max) {
-//         t = a[f];
-//         a[f] = a[max];
-//         a[max] = t;
-//         maxHeapify(a, max, size);
-//     }
-// }
+void maxHeapify(int a[], int f, int size) {
+    int max = f, l = f * 2, r = f * 2 + 1, t;
+    if (l <= size && a[l] > a[max])
+        max = l;
+    if (r <= size && a[r] > a[max])
+        max = r;
+    if (f != max) {
+        t = a[f];
+        a[f] = a[max];
+        a[max] = t;
+        maxHeapify(a, max, size);
+    }
+}
