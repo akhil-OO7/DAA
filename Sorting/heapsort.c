@@ -36,23 +36,63 @@ void heapify(int a[], int n) {
 }
 
 void reheapifyDownward(int a[], int start, int finish) {
-    int maximum, index, temp, lchild, rchild;
-    lchild = 2 * start;
-    rchild= lchild - 1;
-    if (lchild <= finish) {
-        maximum = a[lchild];
-        index = lchild;
-    }
-    if (rchild <= finish) {
-        if (a[rchild] > maximum){
-            maximum = a[rchild];
-            index = rchild;
-        }
-    }
-    if (a[start] < a[index]) {
+    int max, index, temp, l, r;
+    max = start;
+    l = 2 * start;
+    r = 2 * start + 1;
+    if (l <= finish && a[l] > a[max])
+        max = l;
+    if (r <= finish && a[r] > a[max])
+        max = r;
+    if(start != max) {
         temp = a[start];
-        a[start] = a[index];
-        a[index] = temp;
-        reheapifyDownward(a, index, finish);
+        a[start] = a[max];
+        a[max] = temp;
+        reheapifyDownward(a, max, finish);
     }
 }
+// #include<stdio.h>
+// void heapSort(int [], int);
+// void maxHeap(int [], int, int);
+// void maxHeapify(int [], int, int);
+// void main() {
+//     int a[10], i;
+//     for(i = 1; i < 10; i++){
+//         scanf("%d", &a[i]);
+//     }
+//     maxHeap(a, 1, 9);
+//     heapSort(a, 9);
+//     for (i = 1; i < 10; i++) {
+//         printf("%d ", a[i]);
+//     }
+// }
+
+// void heapSort(int a[], int size) {
+//     int i, t;
+//     for(i = size; i >= 2; i--) {
+//         t = a[1];
+//         a[1] = a[i];
+//         a[i] = t;
+//         maxHeapify(a, 1, i - i);
+//     }
+// }
+
+// void maxHeap(int a[], int beg, int end) {
+//     int i;
+//     for(i = end / 2; i >= beg; i--)
+//     maxHeapify(a, i, end);
+// }
+
+// void maxHeapify(int a[], int f, int size) {
+//     int max = f, l = f * 2, r = f * 2 + 1, t;
+//     if (l <= size && a[l] > a[max])
+//         max = l;
+//     if (r <= size && a[r] > a[max])
+//         max = r;
+//     if (f != max) {
+//         t = a[f];
+//         a[f] = a[max];
+//         a[max] = t;
+//         maxHeapify(a, max, size);
+//     }
+// }
