@@ -21,7 +21,7 @@ bst *inorderSuccesor(bst *root);
 int main() {
     int choice, item;
     while(1) {
-        printf("Enter the operation you want to perform: \n1. Insertion\n2. Insertion Recursively\n3. Preorder Traversal\n4. Inorder Traversal\n5. Post order Traversal\t");
+        printf("Enter the operation you want to perform: \n1. Insertion\n2. Insertion Recursively\n3. Preorder Traversal\n4. Inorder Traversal\n5. Post order Traversal\n6. Deletion \t");
         scanf("%d", &choice);
         switch(choice) {
             case 1:
@@ -30,11 +30,11 @@ int main() {
                 insert(&root, item);
                 break;
             
-            case 2:
-                printf("Enter the value you want to insert: ");
-                scanf("%d", &item);
-                insertRec(&root, item);
-                break;
+            // case 2:
+            //     printf("Enter the value you want to insert: ");
+            //     scanf("%d", &item);
+            //     insertRec(&root, item);
+            //     break;
             
             case 3:
                 preorder(root);
@@ -55,6 +55,7 @@ int main() {
                 printf("Enter the number you want to delete: ");
                 scanf("%d", &item);
                 deletion(&root, item);
+                break;
                 
             default:
                 exit(0);
@@ -64,13 +65,13 @@ int main() {
     return 0;
 }
 
-bst create(int item) {
-    bst *ptr = (bst *)malloc(sizeof(bst));
-    ptr -> info = item;
-    ptr -> left = ptr -> right = NULL;
-    return ptr;
+// bst create(int item) {
+//     bst *ptr = (bst *)malloc(sizeof(bst));
+//     ptr -> info = item;
+//     ptr -> left = ptr -> right = NULL;
+//     return ptr;
     
-}
+// }
 
 void insert(bst **root, int item) {
     bst *loc, *parent;
@@ -95,17 +96,17 @@ void insert(bst **root, int item) {
     }
 }
 
-void insertRec(bst **root, int item) {
-    bst *ptr = (bst *)malloc(sizeof(bst));
-    ptr -> info = item;
-    ptr -> left = ptr -> right = NULL;
-    if (*root == NULL)
-        *root = ptr;
-    else if(ptr -> info < (*root) -> info)
-        insertRec((*root) -> left, item);
-    else
-        insertRec((*root) -> right, item);
-}
+// void insertRec(bst **root, int item) {
+//     bst *ptr = (bst *)malloc(sizeof(bst));
+//     ptr -> info = item;
+//     ptr -> left = ptr -> right = NULL;
+//     if (*root == NULL)
+//         *root = ptr;
+//     else if(ptr -> info < (*root) -> info)
+//         insertRec((*root) -> left, item);
+//     else
+//         insertRec((*root) -> right, item);
+// }
 
 void preorder(bst *root) {
     if (root != NULL){
@@ -131,14 +132,19 @@ void postorder(bst *root) {
     }
 }
 
+bst *inorderSuccesor(bst *curr) {
+    while(curr -> left != NULL)
+        curr = curr -> left;
+    return curr;
+}
 
 void search(bst **curr, bst **parent, int item){
-    while(curr != NULL && curr -> info != item){
+    while(*curr != NULL && (*curr) -> info != item){
         *parent = *curr;
-        if(item < curr -> info)
-            curr = curr -> left;
+        if(item < (*curr) -> info)
+            (*curr) = (*curr) -> left;
         else
-            curr = curr -> right;
+            (*curr) = (*curr) -> right;
     }
 }
 void deletion(bst **root, int item){
@@ -152,7 +158,7 @@ void deletion(bst **root, int item){
     }
     
     if (curr -> left == NULL && curr -> right == NULL) {
-        if(curr != root) {
+        if(curr != *root) {
             if(parent -> left == curr)
                 parent -> left = NULL;
             else
@@ -163,11 +169,20 @@ void deletion(bst **root, int item){
         free(curr);
     }
     else if(curr -> left && curr -> right) {
-        curr = curr -> right;
-        while(curr -> left != NULL)
-            curr = curr -> left;
-        int val = curr -> info;
-        
+        bst *succ = inorderSuccesor(curr -> right);
+        int val = succ -> info;
+        deletion(root, val);
+        curr -> info = val;
     }
-    
+    else {
+        bst *child = curr -> left? curr -> left: curr -> right;
+        if(curr != *root){
+            if(parent -> left == curr)
+                parent -> left = child;
+            else
+                parent -> right = child;
+        }
+        else
+            free(curr);
+    }
 }
