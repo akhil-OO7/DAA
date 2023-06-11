@@ -14,6 +14,9 @@ void preorder(bst *);
 void inorder(bst *);
 void postorder(bst *);
 void insertRec(bst **, int);
+void search(bst **, bst **, int);
+void deletion(bst **root, int);
+bst *inorderSuccesor(bst *root);
 
 int main() {
     int choice, item;
@@ -47,6 +50,11 @@ int main() {
                 postorder(root);
                 printf("\n");
                 break;
+                
+            case 6:
+                printf("Enter the number you want to delete: ");
+                scanf("%d", &item);
+                deletion(&root, item);
                 
             default:
                 exit(0);
@@ -105,8 +113,6 @@ void preorder(bst *root) {
         preorder(root -> left);
         preorder(root -> right);
     }
-    else
-        printf("Empty");
 }
 
 void inorder(bst *root) {
@@ -115,8 +121,6 @@ void inorder(bst *root) {
         printf("%d ", root -> info);
         inorder(root -> right);
     }
-    else
-        printf("Empty");
 }
 
 void postorder(bst *root) {
@@ -125,6 +129,45 @@ void postorder(bst *root) {
         postorder(root -> right);
         printf("%d ", root -> info);
     }
-    else
-        printf("Empty");
+}
+
+
+void search(bst **curr, bst **parent, int item){
+    while(curr != NULL && curr -> info != item){
+        *parent = *curr;
+        if(item < curr -> info)
+            curr = curr -> left;
+        else
+            curr = curr -> right;
+    }
+}
+void deletion(bst **root, int item){
+    bst *parent = NULL;
+    bst *curr = *root;
+    search(&curr, &parent, item);
+    
+    if(curr == NULL){
+        printf("Item not in the Tree");
+        return;
+    }
+    
+    if (curr -> left == NULL && curr -> right == NULL) {
+        if(curr != root) {
+            if(parent -> left == curr)
+                parent -> left = NULL;
+            else
+                parent -> right = NULL;
+        }
+        else
+            *root = NULL;
+        free(curr);
+    }
+    else if(curr -> left && curr -> right) {
+        curr = curr -> right;
+        while(curr -> left != NULL)
+            curr = curr -> left;
+        int val = curr -> info;
+        
+    }
+    
 }
