@@ -183,6 +183,8 @@ void deletion(bst **root, int item){
                 parent -> right = child;
         }
         else
-            free(curr);
+            *root = child;
+           
+        free(curr);
     }
 }
